@@ -1,0 +1,38 @@
+{
+  "image": "mcr.microsoft.com/devcontainers/typescript-node",
+  "postCreateCommand": "bash -i .devcontainer/post-create.sh",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+      "version": "latest"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "vue.volar"
+      ]
+    }
+  },
+  "portsAttributes": {
+    "54321": {
+      "label": "Supabase API & Storage",
+      "onAutoForward": "notify"
+    },
+    "54322": {
+      "label": "PostgreSQL Database",
+      "onAutoForward": "silent"
+    },
+    "54323": {
+      "label": "Supabase Studio",
+      "onAutoForward": "openBrowser"
+    },
+    "54324": {
+      "label": "Inbucket (Email Testing)",
+      "onAutoForward": "silent"
+    },
+    "3000": {
+      "label": "Development Server",
+      "onAutoForward": "openPreview"
+    }
+  }
+}

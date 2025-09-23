@@ -1,0 +1,28 @@
+{
+  "name": "coupon-app",
+  "version": "1.0.0",
+  "description": "Coupon application with Supabase backend",
+  "main": "index.js",
+  "scripts": {
+    "dev": "supabase start",
+    "supabase:start": "supabase start",
+    "supabase:stop": "supabase stop",
+    "supabase:status": "supabase status",
+    "supabase:reset": "supabase db reset",
+    "supabase:migration:new": "supabase migration new",
+    "supabase:db:diff": "supabase db diff",
+    "supabase:gen:types": "supabase gen types typescript --local > types/supabase.ts"
+  },
+  "devDependencies": {
+    "supabase": "^1.226.4"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@capacitor/android": "^7.4.3",
+    "@capacitor/cli": "^7.4.3",
+    "@capacitor/core": "^7.4.3",
+    "@capacitor/ios": "^7.4.3"
+  }
+}
