@@ -30,8 +30,12 @@
       "label": "Inbucket (Email Testing)",
       "onAutoForward": "silent"
     },
-    "3000": {
-      "label": "Development Server",
+    "3001": {
+      "label": "Mobile development server",
+      "onAutoForward": "openPreview"
+    },
+    "3002": {
+      "label": "Admin development server",
       "onAutoForward": "openPreview"
     }
   }
