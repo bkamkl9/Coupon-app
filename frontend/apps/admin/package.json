@@ -16,7 +16,6 @@
   },
   "dependencies": {
     "@nuxt/ui": "^4.0.0",
-    "@workspace/tailwind": "workspace:tailwind",
     "vue": "^3.5.18",
     "vue-router": "^4.5.1"
   },
@@ -33,5 +32,8 @@
     "vite": "^7.0.6",
     "vite-plugin-vue-devtools": "^8.0.0",
     "vue-tsc": "^3.0.4"
+  },
+  "resolutions": {
+    "unimport": "4.1.1"
   }
 }

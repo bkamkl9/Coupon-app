@@ -1,1 +1,0 @@
-export { default as config } from '@workspace/tailwind/tailwind.config'
