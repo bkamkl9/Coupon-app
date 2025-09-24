@@ -1,0 +1,11 @@
+{
+  "name": "@workspace/tailwind",
+  "version": "1.0.0",
+  "dependencies": {
+    "tailwindcss": "^4.1.13",
+    "@tailwindcss/vite": "^4.1.13"
+  },
+  "devDependencies": {
+    "@types/node": "^22.16.5"
+  }
+}

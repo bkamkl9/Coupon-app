@@ -1,0 +1,14 @@
+{
+  "name": "@workspace/tsconfig",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@vue/tsconfig": "^0.7.0",
+    "@tsconfig/node22": "^22.0.2",
+    "@types/node": "^22.16.5"
+  }
+}

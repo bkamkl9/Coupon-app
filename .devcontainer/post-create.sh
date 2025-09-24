@@ -2,17 +2,23 @@
 
 # Supabase local setup
 
-npm install supabase --save-dev
+npm install pnpm --global
+
+pnpm add -D supabase
 
 cd supabase && supabase start
 
 
+# Turborepo init
+
+pnpm add -g turbo
+
 # Capasitor local setup
 
-npm install @capacitor/core @capacitor/cli
-npm install @capacitor/android @capacitor/ios
+pnpm add @capacitor/core @capacitor/cli
+pnpm add @capacitor/android @capacitor/ios
 
 
 # Vue local setup
 
-cd frontend && npm install
+cd frontend && pnpm install

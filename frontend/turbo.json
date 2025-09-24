@@ -1,0 +1,24 @@
+{
+  "$schema": "https://turborepo.com/schema.json",
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", ".env*"],
+      "outputs": ["dist/**", "build/**", ".output/**"]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "lint": {
+      "inputs": ["src/**/*.{ts,tsx,vue,js,jsx}", "*.{ts,js,vue}"]
+    },
+    "type-check": {
+      "dependsOn": ["^build"],
+      "inputs": ["src/**/*.{ts,tsx,vue}", "*.{ts,vue}", "tsconfig.json"]
+    },
+    "clean": {
+      "cache": false
+    }
+  }
+}

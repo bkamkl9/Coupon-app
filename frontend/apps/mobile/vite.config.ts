@@ -5,7 +5,6 @@ import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
 import tailwindcss from '@tailwindcss/vite'
 
-
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
@@ -13,16 +12,12 @@ export default defineConfig({
     tailwindcss(),
     vueDevTools(),
   ],
+  server: {
+    port: 3002,
+  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     },
   },
-  server: {
-    host: '0.0.0.0',
-    port: 3000,
-    watch: {
-      usePolling: true
-    }
-  }
 })
