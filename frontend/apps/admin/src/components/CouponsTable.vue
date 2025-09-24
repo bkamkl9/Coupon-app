@@ -28,7 +28,7 @@ const props = defineProps<Props>()
 
 const emit = defineEmits<{
     edit: [id: number]
-    hide: [id: number]
+    toggleVisibility: [id: number]
     delete: [id: number]
 }>()
 
@@ -99,6 +99,7 @@ const columns: TableColumn<Coupon>[] = [
 
             return h('div', { class: 'flex gap-2' }, [
                 h(UButton, {
+                    class: 'cursor-pointer',
                     size: 'xs',
                     variant: 'ghost',
                     color: 'blue',
@@ -106,13 +107,15 @@ const columns: TableColumn<Coupon>[] = [
                     onClick: () => emit('edit', couponId)
                 }),
                 h(UButton, {
+                    class: 'cursor-pointer',
                     size: 'xs',
                     variant: 'ghost',
                     color: 'yellow',
                     icon: row.getValue('status') === 'hidden' ? 'i-heroicons-eye' : 'i-heroicons-eye-slash',
-                    onClick: () => emit('hide', couponId)
+                    onClick: () => emit('toggleVisibility', couponId)
                 }),
                 h(UButton, {
+                    class: 'cursor-pointer',
                     size: 'xs',
                     variant: 'ghost',
                     color: 'red',

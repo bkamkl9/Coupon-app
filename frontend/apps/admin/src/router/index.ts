@@ -23,10 +23,6 @@ const createAppRoutes = (): RouteRecordRaw[] => {
   return [
     {
       path: "/",
-      redirect: "/dashboard",
-    },
-    {
-      path: "/",
       component: DashboardLayout,
       children: allChildRoutes as RouteRecordRaw[],
     },
