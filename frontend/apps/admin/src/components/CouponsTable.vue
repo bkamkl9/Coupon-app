@@ -71,6 +71,24 @@ const columns: TableColumn<Coupon>[] = [
         }
     },
     {
+        accessorKey: 'link',
+        header: 'Link',
+        cell: ({ row }) => {
+            const link = row.getValue('link') as string
+            const truncated = link.length > 50 ? link.substring(0, 50) + '...' : link
+            return h('div', { class: 'text-gray-600 text-sm' }, truncated)
+        }
+    },
+    {
+        accessorKey: 'image_url',
+        header: 'Image',
+        cell: ({ row }) => {
+            const image_url = row.getValue('image_url') as string
+            const truncated = image_url.length > 50 ? image_url.substring(0, 50) + '...' : image_url
+            return h('div', { class: 'text-gray-600 text-sm' }, truncated)
+        }
+    },
+    {
         accessorKey: 'code',
         header: 'Code',
         cell: ({ row }) => {
