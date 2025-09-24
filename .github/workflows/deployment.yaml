@@ -17,14 +17,22 @@ jobs:
         with:
           node-version: 21
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Install turbo repo
+        run: npm install -g turbo
+
       - name: Install dependencies
-        run: npm install
+        run: cd frontend && pnpm install
 
       - name: Build the app
-        run: npm run build
+        run: cd frontend && turbo build
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+          publish_dir: ./frontend/apps/admin/dist
