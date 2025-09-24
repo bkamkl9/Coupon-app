@@ -31,8 +31,18 @@ jobs:
       - name: Build the app
         run: cd frontend && turbo build
 
+      - name: Copy admin dist to output directory
+        run: |
+          mkdir -p ./output/admin
+          cp -r ./frontend/apps/admin/dist/* ./output/admin/
+
+      - name: Copy admin dist to output directory
+        run: |
+          mkdir -p ./output/mobile
+          cp -r ./frontend/apps/mobile/dist/* ./output/mobile/
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./frontend/apps/admin/dist
+          publish_dir: ./output
