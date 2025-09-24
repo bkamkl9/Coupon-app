@@ -1,12 +1,14 @@
-import type { AppRouteRecord } from "../types";
-import { createPageMeta, createRoute } from "../helpers";
+import type { RouteRecordRaw } from "vue-router";
 import StatsView from "@/views/StatsView.vue";
 
-export const statsRoutes: AppRouteRecord[] = [
-    createRoute(
-        "stats",
-        "Statistics",
-        StatsView,
-        createPageMeta("Statistics Overview", { showToolbar: false }),
-    ),
+export const statsRoutes: RouteRecordRaw[] = [
+    {
+        path: "stats",
+        name: "Statistics",
+        component: StatsView,
+        meta: {
+            showToolbar: false,
+            title: "Statistics Overview",
+        },
+    },
 ];

@@ -1,12 +1,14 @@
-import type { AppRouteRecord } from "../types";
-import { createPageMeta, createRoute } from "../helpers";
+import type { RouteRecordRaw } from "vue-router";
 import UsersView from "@/views/UsersView.vue";
 
-export const userRoutes: AppRouteRecord[] = [
-    createRoute(
-        "users",
-        "Users",
-        UsersView,
-        createPageMeta("Users Management", { showToolbar: false }),
-    ),
+export const userRoutes: RouteRecordRaw[] = [
+    {
+        path: "users",
+        name: "Users",
+        component: UsersView,
+        meta: {
+            showToolbar: false,
+            title: "Users Management",
+        },
+    },
 ];

@@ -1,35 +1,70 @@
-import type { AppRouteRecord } from "../types";
-import {
-    createCrudMeta,
-    createGoBackMeta,
-    createRoute,
-    createRouteGroup,
-} from "../helpers";
-import { ROUTE_NAMES, ROUTE_PATHS } from "../constants";
+import type { RouteRecordRaw } from "vue-router";
 import CouponsView from "@/views/Coupons/CouponsIndexView.vue";
 import AddCouponView from "@/views/Coupons/AddCouponView.vue";
 import BrowseCouponView from "@/views/Coupons/BrowseCouponView.vue";
+import CouponStatisticsView from "@/views/Coupons/CouponStatisticsView.vue";
 
-const couponChildRoutes: AppRouteRecord[] = [
-    createRoute(
-        "add",
-        ROUTE_NAMES.ADD_COUPON,
-        AddCouponView,
-        createGoBackMeta(ROUTE_PATHS.COUPONS.INDEX, "Add new coupon"),
-    ),
-    createRoute(
-        "",
-        ROUTE_NAMES.BROWSE_COUPONS,
-        BrowseCouponView,
-        createCrudMeta("Coupons Management", ROUTE_PATHS.COUPONS.ADD),
-    ),
-];
-
-export const couponRoutes: AppRouteRecord[] = [
-    createRouteGroup(
-        "coupons",
-        ROUTE_NAMES.COUPONS,
-        CouponsView,
-        couponChildRoutes,
-    ),
+export const couponRoutes: RouteRecordRaw[] = [
+    {
+        path: "coupons",
+        name: "Coupons",
+        component: CouponsView,
+        children: [
+            {
+                path: "statistics",
+                name: "Coupon Statistics",
+                component: CouponStatisticsView,
+                meta: {
+                    showToolbar: true,
+                    title: "Coupon Statistics",
+                    toolbarActions: [
+                        {
+                            label: "Back",
+                            icon: "i-heroicons-arrow-left",
+                            to: "/coupons",
+                        },
+                    ],
+                },
+            },
+            {
+                path: "add",
+                name: "Add Coupon",
+                component: AddCouponView,
+                meta: {
+                    showToolbar: true,
+                    title: "Add new coupon",
+                    toolbarActions: [
+                        {
+                            label: "Back",
+                            icon: "i-heroicons-arrow-left",
+                            to: "/coupons",
+                        },
+                    ],
+                },
+            },
+            {
+                path: "",
+                name: "Browse Coupons",
+                component: BrowseCouponView,
+                meta: {
+                    showToolbar: true,
+                    title: "Coupons Management",
+                    toolbarActions: [
+                        {
+                            label: "Statistics",
+                            icon: "i-heroicons-chart-bar",
+                            action: "statistics",
+                            to: "/coupons/statistics",
+                        },
+                        {
+                            label: "Add Coupon",
+                            icon: "i-heroicons-plus",
+                            action: "add",
+                            to: "/coupons/add",
+                        },
+                    ],
+                },
+            },
+        ],
+    },
 ];

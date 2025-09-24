@@ -1,16 +1,12 @@
 # Router Architecture
 
-This directory contains a scalable and modular router configuration for the
-admin application.
+A simple and modular router configuration for the admin application.
 
 ## Structure
 
 ```
 router/
-├── index.ts          # Main router configuration
-├── types.ts          # TypeScript interfaces and types
-├── helpers.ts        # Route creation helper functions
-├── commonMeta.ts     # Legacy meta helpers (deprecated)
+├── index.ts          # Main router configuration (34 lines)
 ├── routes/           # Route modules organized by feature
 │   ├── index.ts      # Exports all route modules
 │   ├── dashboard.ts  # Dashboard routes
@@ -22,101 +18,116 @@ router/
 
 ## Key Features
 
-### 🔧 Helper Functions
-
-- **`createRoute()`** - Creates standardized route objects
-- **`createRouteGroup()`** - Creates nested route structures
-- **`createPageMeta()`** - Standardized page meta configuration
-- **`createGoBackMeta()`** - Go-back navigation meta
-- **`createCrudMeta()`** - CRUD-style toolbar configuration
-- **`mergeRouteGroups()`** - Combines multiple route arrays
-
-### 📁 Modular Organization
-
-Routes are organized by feature area:
-
+### 📁 **Simple Modular Organization**
 - Each feature has its own route file
-- Easy to add new features without touching existing code
-- Clear separation of concerns
+- Standard Vue Router configuration
+- No unnecessary abstractions
+- Easy to understand and modify
 
-### 🎯 Type Safety
+### 🎯 **Direct Route Definitions**
+- Uses standard `RouteRecordRaw` types
+- No custom helper functions
+- Clear, readable route objects
+- Standard Vue Router patterns
 
-- TypeScript interfaces for all route configurations
-- Enhanced meta types with proper typing
-- Better IDE support and autocompletion
+## Route File Structure
 
-## Usage Examples
-
-### Creating a Simple Route
-
-```typescript
-import { createPageMeta, createRoute } from "../helpers";
-
-const route = createRoute(
-    "users",
-    "Users",
-    UsersView,
-    createPageMeta("Users Management", { showToolbar: false }),
-);
-```
-
-### Creating a Route with Toolbar Actions
+Each route file exports an array of `RouteRecordRaw` objects:
 
 ```typescript
-import { createCrudMeta } from "../helpers";
+import type { RouteRecordRaw } from "vue-router";
+import MyView from "@/views/MyView.vue";
 
-const meta = createCrudMeta("Coupons Management", "/coupons/add", [
+export const myRoutes: RouteRecordRaw[] = [
     {
-        label: "Export",
-        icon: "i-heroicons-arrow-down-tray",
-        action: "export",
+        path: "my-path",
+        name: "My Route",
+        component: MyView,
+        meta: {
+            showToolbar: false,
+            title: "My Page Title",
+        },
     },
-]);
-```
-
-### Creating Nested Routes
-
-```typescript
-import { createRouteGroup } from "../helpers";
-
-const couponRoutes = createRouteGroup(
-    "coupons",
-    "Coupons",
-    CouponsView,
-    childRoutes,
-);
+];
 ```
 
 ## Adding New Features
 
-1. Create a new route file in `routes/` directory
-2. Export your routes array
-3. Add the export to `routes/index.ts`
-4. Import and include in main router (`index.ts`)
+1. **Create a route file** in `routes/` directory:
+   ```typescript
+   // routes/products.ts
+   import type { RouteRecordRaw } from "vue-router";
+   import ProductsView from "@/views/ProductsView.vue";
 
-Example:
+   export const productRoutes: RouteRecordRaw[] = [
+       {
+           path: "products",
+           name: "Products",
+           component: ProductsView,
+           meta: {
+               showToolbar: true,
+               title: "Product Management",
+               toolbarActions: [
+                   {
+                       label: "Add Product",
+                       icon: "i-heroicons-plus",
+                       to: "/products/add",
+                   },
+               ],
+           },
+       },
+   ];
+   ```
+
+2. **Export from routes/index.ts**:
+   ```typescript
+   export { productRoutes } from "./products";
+   ```
+
+3. **Add to main router**:
+   ```typescript
+   // index.ts
+   import { productRoutes } from "./routes";
+   
+   const routes: RouteRecordRaw[] = [
+       // ... existing routes
+       {
+           path: "/",
+           component: DashboardLayout,
+           children: [
+               ...dashboardRoutes,
+               ...couponRoutes,
+               ...userRoutes,
+               ...statsRoutes,
+               ...productRoutes,  // Add new routes
+           ],
+       },
+   ];
+   ```
+
+## Meta Configuration
+
+Standard meta properties for toolbar configuration:
 
 ```typescript
-// routes/products.ts
-export const productRoutes: AppRouteRecord[] = [
-    createRoute(
-        "products",
-        "Products",
-        ProductsView,
-        createPageMeta("Product Management"),
-    ),
-];
-
-// routes/index.ts
-export { productRoutes } from "./products";
-
-// index.ts
-import { productRoutes } from "./routes";
-// Add to mergeRouteGroups call
+meta: {
+    showToolbar: boolean,           // Show/hide toolbar
+    title: string,                  // Page title
+    toolbarActions?: [              // Optional toolbar buttons
+        {
+            label: string,          // Button text
+            icon: string,           // Icon class
+            to?: string,           // Navigation target
+            action?: string,       // Action identifier
+        }
+    ]
+}
 ```
 
-## Migration Notes
+## Benefits
 
-- `commonMeta.ts` is deprecated but kept for backward compatibility
-- Use the new helper functions in `helpers.ts` for new development
-- Existing routes have been migrated to the new structure
+- ✅ **Simple**: No custom abstractions to learn
+- ✅ **Standard**: Uses Vue Router exactly as intended  
+- ✅ **Modular**: Features cleanly separated
+- ✅ **Readable**: Direct route configuration
+- ✅ **Maintainable**: Easy to modify and extend
