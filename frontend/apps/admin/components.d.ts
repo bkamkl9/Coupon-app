@@ -8,9 +8,11 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    CouponsTable: typeof import('./src/components/CouponsTable.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     UApp: typeof import('./../../node_modules/.pnpm/@nuxt+ui@4.0.0_@babel+parser@7.28.4_embla-carousel@8.6.0_typescript@5.8.3_vite@7.1.7_@types+n_yrt2du2nnymkqgodg7en7a5qwe/node_modules/@nuxt/ui/dist/runtime/components/App.vue')['default']
+    UBadge: typeof import('./../../node_modules/.pnpm/@nuxt+ui@4.0.0_@babel+parser@7.28.4_embla-carousel@8.6.0_typescript@5.8.3_vite@7.1.7_@types+n_yrt2du2nnymkqgodg7en7a5qwe/node_modules/@nuxt/ui/dist/runtime/components/Badge.vue')['default']
     UButton: typeof import('./../../node_modules/.pnpm/@nuxt+ui@4.0.0_@babel+parser@7.28.4_embla-carousel@8.6.0_typescript@5.8.3_vite@7.1.7_@types+n_yrt2du2nnymkqgodg7en7a5qwe/node_modules/@nuxt/ui/dist/runtime/components/Button.vue')['default']
     UDashboardGroup: typeof import('./../../node_modules/.pnpm/@nuxt+ui@4.0.0_@babel+parser@7.28.4_embla-carousel@8.6.0_typescript@5.8.3_vite@7.1.7_@types+n_yrt2du2nnymkqgodg7en7a5qwe/node_modules/@nuxt/ui/dist/runtime/components/DashboardGroup.vue')['default']
     UDashboardNavbar: typeof import('./../../node_modules/.pnpm/@nuxt+ui@4.0.0_@babel+parser@7.28.4_embla-carousel@8.6.0_typescript@5.8.3_vite@7.1.7_@types+n_yrt2du2nnymkqgodg7en7a5qwe/node_modules/@nuxt/ui/dist/runtime/components/DashboardNavbar.vue')['default']
@@ -20,5 +22,6 @@ declare module 'vue' {
     UIcon: typeof import('./../../node_modules/.pnpm/@nuxt+ui@4.0.0_@babel+parser@7.28.4_embla-carousel@8.6.0_typescript@5.8.3_vite@7.1.7_@types+n_yrt2du2nnymkqgodg7en7a5qwe/node_modules/@nuxt/ui/dist/runtime/vue/components/Icon.vue')['default']
     UMain: typeof import('./../../node_modules/.pnpm/@nuxt+ui@4.0.0_@babel+parser@7.28.4_embla-carousel@8.6.0_typescript@5.8.3_vite@7.1.7_@types+n_yrt2du2nnymkqgodg7en7a5qwe/node_modules/@nuxt/ui/dist/runtime/components/Main.vue')['default']
     UNavigationMenu: typeof import('./../../node_modules/.pnpm/@nuxt+ui@4.0.0_@babel+parser@7.28.4_embla-carousel@8.6.0_typescript@5.8.3_vite@7.1.7_@types+n_yrt2du2nnymkqgodg7en7a5qwe/node_modules/@nuxt/ui/dist/runtime/components/NavigationMenu.vue')['default']
+    UTable: typeof import('./../../node_modules/.pnpm/@nuxt+ui@4.0.0_@babel+parser@7.28.4_embla-carousel@8.6.0_typescript@5.8.3_vite@7.1.7_@types+n_yrt2du2nnymkqgodg7en7a5qwe/node_modules/@nuxt/ui/dist/runtime/components/Table.vue')['default']
   }
 }
