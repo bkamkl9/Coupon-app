@@ -1,9 +1,9 @@
 import { fileURLToPath, URL } from 'node:url'
-import { existsSync, readFileSync, unlinkSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
+import ui from '@nuxt/ui/vite'
 import tailwindcss from '@tailwindcss/vite'
 
 const root = path.resolve();
@@ -14,6 +14,7 @@ export default defineConfig({
     vue(),
     tailwindcss(),
     vueDevTools(),
+    ui(),
   ],
   server: {
     port: 3001,
