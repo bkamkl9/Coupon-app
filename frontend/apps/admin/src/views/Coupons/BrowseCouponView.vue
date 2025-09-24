@@ -1,12 +1,10 @@
 <template>
-  <div>
-    <CouponsTable :coupons="coupons" />
-  </div>
+  <CouponsTable :coupons="coupons" />
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import CouponsTable, { type Coupon } from '../components/CouponsTable.vue'
+import CouponsTable, { type Coupon } from '../../components/CouponsTable.vue'
 
 const coupons = ref<Coupon[]>([
   {
