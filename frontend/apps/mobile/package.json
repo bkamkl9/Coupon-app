@@ -30,7 +30,6 @@
     "vite": "^7.0.6",
     "vite-plugin-vue-devtools": "^8.0.0",
     "vue-tsc": "^3.0.4",
-    "@workspace/tsconfig": "workspace:tsconfig",
     "@tailwindcss/vite": "^4.1.13",
     "tailwindcss": "^4.1.13"
   }
