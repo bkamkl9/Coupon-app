@@ -30,6 +30,12 @@ router/
 - Clear, readable route objects
 - Standard Vue Router patterns
 
+### 🔒 **Authentication Guards**
+- Centralized authentication logic in router
+- Automatic session restoration on app load
+- Protected routes with `meta: { requiresAuth: true }`
+- Smart redirects for authenticated/unauthenticated users
+
 ## Route File Structure
 
 Each route file exports an array of `RouteRecordRaw` objects:
@@ -124,6 +130,64 @@ meta: {
 }
 ```
 
+## Authentication & Navigation Guards
+
+### How It Works
+
+The router includes a `beforeEach` navigation guard that:
+
+1. **Checks Session**: Automatically restores user session on first load
+2. **Protects Routes**: Redirects unauthenticated users to `/login`
+3. **Smart Redirects**: Sends authenticated users away from `/login` to `/dashboard`
+
+```typescript
+router.beforeEach(async (to, from, next) => {
+  // Check session on first load
+  if (authMachine.currentState.value === "IDLE") {
+    await authMachine.IDLE.checkSession();
+  }
+
+  const isAuthenticated = authMachine.currentState.value === "AUTHENTICATED";
+  const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
+
+  if (requiresAuth && !isAuthenticated) {
+    next("/login");
+  } else if (to.path === "/login" && isAuthenticated) {
+    next("/dashboard");
+  } else {
+    next();
+  }
+});
+```
+
+### Protected Routes
+
+Mark routes as requiring authentication:
+
+```typescript
+{
+  path: "/",
+  component: DashboardLayout,
+  meta: { requiresAuth: true },  // This protects all child routes
+  children: [
+    // All dashboard routes require authentication
+  ],
+}
+```
+
+### Public Routes
+
+Routes without `requiresAuth: true` are accessible to everyone:
+
+```typescript
+{
+  path: "/login",
+  name: "Login",
+  component: LoginView,
+  // No meta.requiresAuth - public route
+}
+```
+
 ## Benefits
 
 - ✅ **Simple**: No custom abstractions to learn
@@ -131,3 +195,5 @@ meta: {
 - ✅ **Modular**: Features cleanly separated
 - ✅ **Readable**: Direct route configuration
 - ✅ **Maintainable**: Easy to modify and extend
+- ✅ **Secure**: Centralized authentication logic
+- ✅ **User-Friendly**: Automatic redirects and session restoration
