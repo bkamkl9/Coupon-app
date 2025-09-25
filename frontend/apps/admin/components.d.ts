@@ -23,8 +23,10 @@ declare module 'vue' {
     UDashboardPanel: typeof import('./../../node_modules/.pnpm/@nuxt+ui@4.0.0_@babel+parser@7.28.4_embla-carousel@8.6.0_typescript@5.8.3_vite@7.1.7_@types+n_yrt2du2nnymkqgodg7en7a5qwe/node_modules/@nuxt/ui/dist/runtime/components/DashboardPanel.vue')['default']
     UDashboardSidebar: typeof import('./../../node_modules/.pnpm/@nuxt+ui@4.0.0_@babel+parser@7.28.4_embla-carousel@8.6.0_typescript@5.8.3_vite@7.1.7_@types+n_yrt2du2nnymkqgodg7en7a5qwe/node_modules/@nuxt/ui/dist/runtime/components/DashboardSidebar.vue')['default']
     UDashboardToolbar: typeof import('./../../node_modules/.pnpm/@nuxt+ui@4.0.0_@babel+parser@7.28.4_embla-carousel@8.6.0_typescript@5.8.3_vite@7.1.7_@types+n_yrt2du2nnymkqgodg7en7a5qwe/node_modules/@nuxt/ui/dist/runtime/components/DashboardToolbar.vue')['default']
+    UDropdownMenu: typeof import('./../../node_modules/.pnpm/@nuxt+ui@4.0.0_@babel+parser@7.28.4_embla-carousel@8.6.0_typescript@5.8.3_vite@7.1.7_@types+n_yrt2du2nnymkqgodg7en7a5qwe/node_modules/@nuxt/ui/dist/runtime/components/DropdownMenu.vue')['default']
     UInput: typeof import('./../../node_modules/.pnpm/@nuxt+ui@4.0.0_@babel+parser@7.28.4_embla-carousel@8.6.0_typescript@5.8.3_vite@7.1.7_@types+n_yrt2du2nnymkqgodg7en7a5qwe/node_modules/@nuxt/ui/dist/runtime/components/Input.vue')['default']
     UNavigationMenu: typeof import('./../../node_modules/.pnpm/@nuxt+ui@4.0.0_@babel+parser@7.28.4_embla-carousel@8.6.0_typescript@5.8.3_vite@7.1.7_@types+n_yrt2du2nnymkqgodg7en7a5qwe/node_modules/@nuxt/ui/dist/runtime/components/NavigationMenu.vue')['default']
+    UPagination: typeof import('./../../node_modules/.pnpm/@nuxt+ui@4.0.0_@babel+parser@7.28.4_embla-carousel@8.6.0_typescript@5.8.3_vite@7.1.7_@types+n_yrt2du2nnymkqgodg7en7a5qwe/node_modules/@nuxt/ui/dist/runtime/components/Pagination.vue')['default']
     UTable: typeof import('./../../node_modules/.pnpm/@nuxt+ui@4.0.0_@babel+parser@7.28.4_embla-carousel@8.6.0_typescript@5.8.3_vite@7.1.7_@types+n_yrt2du2nnymkqgodg7en7a5qwe/node_modules/@nuxt/ui/dist/runtime/components/Table.vue')['default']
   }
 }

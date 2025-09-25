@@ -42,7 +42,10 @@
         </UDashboardToolbar>
       </template>
       <template #body>
-        <RouterView />
+        <Suspense>
+          <RouterView />
+          <template #fallback> Loading... </template>
+        </Suspense>
       </template>
     </UDashboardPanel>
   </UDashboardGroup>

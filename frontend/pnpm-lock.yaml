@@ -26,6 +26,9 @@ importers:
       vue-router:
         specifier: ^4.5.1
         version: 4.5.1(vue@3.5.21(typescript@5.8.3))
+      vue-table:
+        specifier: link:@types/@tanstack/vue-table
+        version: link:@types/@tanstack/vue-table
       xmachinevue:
         specifier: ^3.3.1
         version: 3.3.1(typescript@5.8.3)

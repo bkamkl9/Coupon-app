@@ -1,147 +1,235 @@
 <template>
-    <UTable :data="props.coupons" :columns="columns" class="border border-slate-700 rounded-md" />
+  <UTable :data="props.coupons" :columns="columns" class="border border-slate-700 rounded-md" />
 </template>
 
 <script setup lang="ts">
 import { h, resolveComponent } from 'vue'
 import type { TableColumn } from '@nuxt/ui'
+import type { TableRow } from '@nuxt/ui/components/Table.vue.d.ts'
+import type { Tables } from '@/types/db'
 
 const UBadge = resolveComponent('UBadge')
 const UButton = resolveComponent('UButton')
+const UDropdownMenu = resolveComponent('UDropdownMenu')
 
-export type Coupon = {
-    id: number
-    status: 'active' | 'inactive' | 'scheduled' | 'hidden'
-    title: string
-    description: string
-    image_url: string
-    price: number
-    code: string
-    link: string
+const toast = useToast()
+
+async function copyToClipboard(text: string) {
+  try {
+    await navigator.clipboard.writeText(text)
+    return true
+  } catch (err) {
+    console.error('Failed to copy: ', err)
+    return false
+  }
 }
 
 interface Props {
-    coupons: Coupon[]
+  coupons: Tables<'Coupons'>[]
 }
 
 const props = defineProps<Props>()
 
 const emit = defineEmits<{
-    edit: [id: number]
-    toggleVisibility: [id: number]
-    delete: [id: number]
+  edit: [id: string]
+  toggleVisibility: [id: string]
+  delete: [id: string]
 }>()
 
-const columns: TableColumn<Coupon>[] = [
-    {
-        accessorKey: 'id',
-        header: '#',
-        cell: ({ row }) => `#${row.getValue('id')}`
-    },
-    {
-        accessorKey: 'status',
-        header: 'Status',
-        cell: ({ row }) => {
-            const status = row.getValue('status') as 'active' | 'inactive' | 'scheduled' | 'hidden'
-            const statusConfig = {
-                active: { color: 'success' as const, text: 'Active' },
-                inactive: { color: 'error' as const, text: 'Inactive' },
-                scheduled: { color: 'warning' as const, text: 'Scheduled' },
-                hidden: { color: 'neutral' as const, text: 'Hidden' }
-            }
+function getRowItems(row: TableRow<Tables<'Coupons'>>) {
+  const couponId = row.original.id
+  const status = row.original.status
+  const code = row.original.code
 
-            const config = statusConfig[status]
-            return h(UBadge, { class: 'capitalize', variant: 'subtle', color: config.color }, () => config.text)
-        }
+  return [
+    {
+      type: 'label',
+      label: 'Actions',
     },
     {
-        accessorKey: 'title',
-        header: 'Title',
-        cell: ({ row }) => {
-            return h('div', { class: 'font-medium' }, row.getValue('title'))
+      label: 'Copy coupon code',
+      icon: 'i-heroicons-clipboard-document',
+      async onSelect() {
+        const success = await copyToClipboard(code)
+        if (success) {
+          toast.add({
+            title: 'Coupon code copied to clipboard!',
+            color: 'success',
+            icon: 'i-heroicons-check-circle',
+          })
+        } else {
+          toast.add({
+            title: 'Failed to copy coupon code',
+            color: 'error',
+            icon: 'i-heroicons-x-circle',
+          })
         }
+      },
     },
     {
-        accessorKey: 'description',
-        header: 'Description',
-        cell: ({ row }) => {
-            const description = row.getValue('description') as string
-            const truncated = description.length > 50 ? description.substring(0, 50) + '...' : description
-            return h('div', { class: 'text-gray-600 text-sm' }, truncated)
+      label: 'Copy coupon ID',
+      icon: 'i-heroicons-hashtag',
+      async onSelect() {
+        const success = await copyToClipboard(couponId.toString())
+        if (success) {
+          toast.add({
+            title: 'Coupon ID copied to clipboard!',
+            color: 'success',
+            icon: 'i-heroicons-check-circle',
+          })
+        } else {
+          toast.add({
+            title: 'Failed to copy coupon ID',
+            color: 'error',
+            icon: 'i-heroicons-x-circle',
+          })
         }
+      },
     },
     {
-        accessorKey: 'link',
-        header: 'Link',
-        cell: ({ row }) => {
-            const link = row.getValue('link') as string
-            const truncated = link.length > 50 ? link.substring(0, 50) + '...' : link
-            return h('div', { class: 'text-gray-600 text-sm' }, truncated)
-        }
+      type: 'separator',
     },
     {
-        accessorKey: 'image_url',
-        header: 'Image',
-        cell: ({ row }) => {
-            const image_url = row.getValue('image_url') as string
-            const truncated = image_url.length > 50 ? image_url.substring(0, 50) + '...' : image_url
-            return h('div', { class: 'text-gray-600 text-sm' }, truncated)
-        }
+      label: 'Edit coupon',
+      icon: 'i-heroicons-pencil-square',
+      onSelect() {
+        emit('edit', couponId)
+      },
     },
     {
-        accessorKey: 'code',
-        header: 'Code',
-        cell: ({ row }) => {
-            return h('div', { class: 'font-mono bg-slate-800 px-2 py-1 rounded text-sm' }, row.getValue('code'))
-        }
+      label: status === 'hidden' ? 'Show coupon' : 'Hide coupon',
+      icon: status === 'hidden' ? 'i-heroicons-eye' : 'i-heroicons-eye-slash',
+      onSelect() {
+        emit('toggleVisibility', couponId)
+      },
     },
     {
-        accessorKey: 'price',
-        header: () => h('div', { class: 'text-right' }, 'Price'),
-        cell: ({ row }) => {
-            const price = Number.parseFloat(row.getValue('price'))
+      type: 'separator',
+    },
+    {
+      label: 'Delete coupon',
+      icon: 'i-heroicons-trash',
+      onSelect() {
+        emit('delete', couponId)
+      },
+    },
+  ]
+}
 
-            const formatted = new Intl.NumberFormat('en-US', {
-                style: 'currency',
-                currency: 'USD'
-            }).format(price)
+const columns: TableColumn<Tables<'Coupons'>>[] = [
+  {
+    accessorKey: 'id',
+    header: 'Unique ID',
+    cell: ({ row }) => `${row.getValue('id')}`,
+  },
+  {
+    accessorKey: 'status',
+    header: 'Status',
+    cell: ({ row }) => {
+      const status = row.getValue('status') as 'active' | 'in_active' | 'scheduled' | 'hidden'
+      const statusConfig = {
+        active: { color: 'success' as const, text: 'Active' },
+        in_active: { color: 'error' as const, text: 'Inactive' },
+        scheduled: { color: 'warning' as const, text: 'Scheduled' },
+        hidden: { color: 'neutral' as const, text: 'Hidden' },
+      }
 
-            return h('div', { class: 'text-right font-medium' }, formatted)
-        }
+      const config = statusConfig[status]
+      return h(
+        UBadge,
+        { class: 'capitalize', variant: 'subtle', color: config.color },
+        () => config.text,
+      )
     },
-    {
-        accessorKey: 'actions',
-        header: 'Actions',
-        cell: ({ row }) => {
-            const couponId = row.getValue('id') as number
+  },
+  {
+    accessorKey: 'title',
+    header: 'Title',
+    cell: ({ row }) => {
+      const title = row.getValue('title') as string
+      const truncated = title.length > 20 ? title.substring(0, 20) + '...' : title
+      return h('div', { class: 'font-medium' }, truncated)
+    },
+  },
+  {
+    accessorKey: 'description',
+    header: 'Description',
+    cell: ({ row }) => {
+      const description = row.getValue('description') as string
+      const truncated = description.length > 10 ? description.substring(0, 10) + '...' : description
+      return h('div', { class: 'text-gray-600 text-sm' }, truncated)
+    },
+  },
+  {
+    accessorKey: 'link',
+    header: 'Link',
+    cell: ({ row }) => {
+      const link = row.getValue('link') as string
+      const truncated = link.length > 10 ? link.substring(0, 10) + '...' : link
+      return h('div', { class: 'text-gray-600 text-sm' }, truncated)
+    },
+  },
+  {
+    accessorKey: 'image_url',
+    header: 'Image',
+    cell: ({ row }) => {
+      const image_url = row.getValue('image_url') as string
+      const truncated = image_url.length > 10 ? image_url.substring(0, 10) + '...' : image_url
+      return h('div', { class: 'text-gray-600 text-sm' }, truncated)
+    },
+  },
+  {
+    accessorKey: 'code',
+    header: 'Code',
+    cell: ({ row }) => {
+      return h(
+        'div',
+        { class: 'font-mono bg-slate-800 px-2 py-1 rounded text-sm' },
+        row.getValue('code'),
+      )
+    },
+  },
+  {
+    accessorKey: 'price',
+    header: () => h('div', { class: 'text-right' }, 'Price'),
+    cell: ({ row }) => {
+      const price = Number.parseInt(row.getValue('price')) / 100
+      const formatted = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: row.original.currency,
+      }).format(price)
 
-            return h('div', { class: 'flex gap-2' }, [
-                h(UButton, {
-                    class: 'cursor-pointer',
-                    size: 'xs',
-                    variant: 'ghost',
-                    color: 'blue',
-                    icon: 'i-heroicons-pencil-square',
-                    onClick: () => emit('edit', couponId)
-                }),
-                h(UButton, {
-                    class: 'cursor-pointer',
-                    size: 'xs',
-                    variant: 'ghost',
-                    color: 'yellow',
-                    icon: row.getValue('status') === 'hidden' ? 'i-heroicons-eye' : 'i-heroicons-eye-slash',
-                    onClick: () => emit('toggleVisibility', couponId)
-                }),
-                h(UButton, {
-                    class: 'cursor-pointer',
-                    size: 'xs',
-                    variant: 'ghost',
-                    color: 'red',
-                    icon: 'i-heroicons-trash',
-                    onClick: () => emit('delete', couponId)
-                })
-            ])
-        }
-    }
+      return h('div', { class: 'text-right font-medium' }, formatted)
+    },
+  },
+  {
+    id: 'actions',
+    header: () => h('div', { class: 'text-right' }, 'Actions'),
+    cell: ({ row }) => {
+      return h(
+        'div',
+        { class: 'text-right' },
+        h(
+          UDropdownMenu,
+          {
+            content: {
+              align: 'end',
+            },
+            items: getRowItems(row),
+            'aria-label': 'Actions dropdown',
+          },
+          () =>
+            h(UButton, {
+              icon: 'i-heroicons-ellipsis-vertical',
+              color: 'neutral',
+              variant: 'ghost',
+              size: 'xs',
+              class: 'ml-auto',
+              'aria-label': 'Actions dropdown',
+            }),
+        ),
+      )
+    },
+  },
 ]
 </script>
