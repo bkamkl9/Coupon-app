@@ -43,6 +43,22 @@ export const couponRoutes: RouteRecordRaw[] = [
                 },
             },
             {
+                path: "edit/:id",
+                name: "Edit Coupon",
+                component: () => import("@/views/Coupons/EditCouponView.vue"),
+                meta: {
+                    showToolbar: true,
+                    title: "Edit coupon",
+                    toolbarActions: [
+                        {
+                            label: "Back",
+                            icon: "i-heroicons-arrow-left",
+                            to: "/coupons",
+                        },
+                    ],
+                },
+            },
+            {
                 path: "",
                 name: "Browse Coupons",
                 component: BrowseCouponView,

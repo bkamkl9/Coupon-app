@@ -8,6 +8,7 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    CouponEditor: typeof import('./src/components/CouponEditor.vue')['default']
     CouponsTable: typeof import('./src/components/CouponsTable.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
@@ -24,9 +25,15 @@ declare module 'vue' {
     UDashboardSidebar: typeof import('./../../node_modules/.pnpm/@nuxt+ui@4.0.0_@babel+parser@7.28.4_embla-carousel@8.6.0_typescript@5.8.3_vite@7.1.7_@types+n_yrt2du2nnymkqgodg7en7a5qwe/node_modules/@nuxt/ui/dist/runtime/components/DashboardSidebar.vue')['default']
     UDashboardToolbar: typeof import('./../../node_modules/.pnpm/@nuxt+ui@4.0.0_@babel+parser@7.28.4_embla-carousel@8.6.0_typescript@5.8.3_vite@7.1.7_@types+n_yrt2du2nnymkqgodg7en7a5qwe/node_modules/@nuxt/ui/dist/runtime/components/DashboardToolbar.vue')['default']
     UDropdownMenu: typeof import('./../../node_modules/.pnpm/@nuxt+ui@4.0.0_@babel+parser@7.28.4_embla-carousel@8.6.0_typescript@5.8.3_vite@7.1.7_@types+n_yrt2du2nnymkqgodg7en7a5qwe/node_modules/@nuxt/ui/dist/runtime/components/DropdownMenu.vue')['default']
+    UForm: typeof import('./../../node_modules/.pnpm/@nuxt+ui@4.0.0_@babel+parser@7.28.4_embla-carousel@8.6.0_typescript@5.8.3_vite@7.1.7_@types+n_yrt2du2nnymkqgodg7en7a5qwe/node_modules/@nuxt/ui/dist/runtime/components/Form.vue')['default']
+    UFormField: typeof import('./../../node_modules/.pnpm/@nuxt+ui@4.0.0_@babel+parser@7.28.4_embla-carousel@8.6.0_typescript@5.8.3_vite@7.1.7_@types+n_yrt2du2nnymkqgodg7en7a5qwe/node_modules/@nuxt/ui/dist/runtime/components/FormField.vue')['default']
+    UIcon: typeof import('./../../node_modules/.pnpm/@nuxt+ui@4.0.0_@babel+parser@7.28.4_embla-carousel@8.6.0_typescript@5.8.3_vite@7.1.7_@types+n_yrt2du2nnymkqgodg7en7a5qwe/node_modules/@nuxt/ui/dist/runtime/vue/components/Icon.vue')['default']
     UInput: typeof import('./../../node_modules/.pnpm/@nuxt+ui@4.0.0_@babel+parser@7.28.4_embla-carousel@8.6.0_typescript@5.8.3_vite@7.1.7_@types+n_yrt2du2nnymkqgodg7en7a5qwe/node_modules/@nuxt/ui/dist/runtime/components/Input.vue')['default']
+    UInputNumber: typeof import('./../../node_modules/.pnpm/@nuxt+ui@4.0.0_@babel+parser@7.28.4_embla-carousel@8.6.0_typescript@5.8.3_vite@7.1.7_@types+n_yrt2du2nnymkqgodg7en7a5qwe/node_modules/@nuxt/ui/dist/runtime/components/InputNumber.vue')['default']
     UNavigationMenu: typeof import('./../../node_modules/.pnpm/@nuxt+ui@4.0.0_@babel+parser@7.28.4_embla-carousel@8.6.0_typescript@5.8.3_vite@7.1.7_@types+n_yrt2du2nnymkqgodg7en7a5qwe/node_modules/@nuxt/ui/dist/runtime/components/NavigationMenu.vue')['default']
     UPagination: typeof import('./../../node_modules/.pnpm/@nuxt+ui@4.0.0_@babel+parser@7.28.4_embla-carousel@8.6.0_typescript@5.8.3_vite@7.1.7_@types+n_yrt2du2nnymkqgodg7en7a5qwe/node_modules/@nuxt/ui/dist/runtime/components/Pagination.vue')['default']
+    USelect: typeof import('./../../node_modules/.pnpm/@nuxt+ui@4.0.0_@babel+parser@7.28.4_embla-carousel@8.6.0_typescript@5.8.3_vite@7.1.7_@types+n_yrt2du2nnymkqgodg7en7a5qwe/node_modules/@nuxt/ui/dist/runtime/components/Select.vue')['default']
     UTable: typeof import('./../../node_modules/.pnpm/@nuxt+ui@4.0.0_@babel+parser@7.28.4_embla-carousel@8.6.0_typescript@5.8.3_vite@7.1.7_@types+n_yrt2du2nnymkqgodg7en7a5qwe/node_modules/@nuxt/ui/dist/runtime/components/Table.vue')['default']
+    UTextarea: typeof import('./../../node_modules/.pnpm/@nuxt+ui@4.0.0_@babel+parser@7.28.4_embla-carousel@8.6.0_typescript@5.8.3_vite@7.1.7_@types+n_yrt2du2nnymkqgodg7en7a5qwe/node_modules/@nuxt/ui/dist/runtime/components/Textarea.vue')['default']
   }
 }
