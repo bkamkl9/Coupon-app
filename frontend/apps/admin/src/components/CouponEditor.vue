@@ -99,7 +99,7 @@ import type { Tables } from '@/types/db'
 import type { SelectItem } from '@nuxt/ui'
 import { z } from 'zod'
 
-const { mode = 'edit' } = defineProps<{
+const { mode = 'create' } = defineProps<{
   mode?: 'edit' | 'create'
 }>()
 
@@ -107,37 +107,39 @@ const emit = defineEmits<{
   (e: 'save'): void
 }>()
 
-const schema = z
-  .object({
-    title: z.string().min(1),
-    description: z.string().optional().nullable(),
-    link: z.string().min(1),
-    code: z.string().min(1),
-    image_url: z.string().optional().nullable(),
-    currency: z.string().min(1),
-    price: z.number().min(0),
-    scheduled_for: z.string().optional().nullable(),
-    status: z.string().min(1),
-    id: z.string().optional(),
-  })
-  .refine(
-    (data) => {
-      // If status is 'scheduled', scheduled_for must be a future datetime
-      if (data.status === 'scheduled') {
-        if (!data.scheduled_for) {
-          return false // scheduled_for is required when status is scheduled
+const schema = computed(() => {
+  return z
+    .object({
+      title: z.string().min(1),
+      description: z.string().optional().nullable(),
+      link: z.string().min(1),
+      code: z.string().min(1),
+      image_url: z.string().optional().nullable(),
+      currency: z.string().min(1),
+      price: z.number().min(0),
+      scheduled_for: z.string().optional().nullable(),
+      status: z.string().min(1),
+      id: mode === 'create' ? z.string().optional() : z.string().min(1),
+    })
+    .refine(
+      (data: any) => {
+        // If status is 'scheduled', scheduled_for must be a future datetime
+        if (data.status === 'scheduled') {
+          if (!data.scheduled_for) {
+            return false // scheduled_for is required when status is scheduled
+          }
+          const scheduledDate = new Date(data.scheduled_for)
+          const now = new Date()
+          return scheduledDate > now // Must be in the future
         }
-        const scheduledDate = new Date(data.scheduled_for)
-        const now = new Date()
-        return scheduledDate > now // Must be in the future
-      }
-      return true // Valid for all other statuses
-    },
-    {
-      message: "When status is 'scheduled', scheduled_for must be a valid future date and time",
-      path: ['scheduled_for'], // Error will be shown on the scheduled_for field
-    },
-  )
+        return true // Valid for all other statuses
+      },
+      {
+        message: "When status is 'scheduled', scheduled_for must be a valid future date and time",
+        path: ['scheduled_for'], // Error will be shown on the scheduled_for field
+      },
+    )
+})
 
 const currencyOptions: SelectItem[] = [
   { label: 'United States Dollar', value: 'USD' },
