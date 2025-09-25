@@ -164,8 +164,18 @@ const columns: TableColumn<Tables<'Coupons'>>[] = [
     header: 'Link',
     cell: ({ row }) => {
       const link = row.getValue('link') as string
-      const truncated = link.length > 10 ? link.substring(0, 10) + '...' : link
-      return h('div', { class: 'text-gray-600 text-sm' }, truncated)
+      const truncated = link.length > 15 ? link.substring(0, 15) + '...' : link
+      return h(
+        'a',
+        {
+          href: link,
+          target: '_blank',
+          rel: 'noopener noreferrer',
+          class: 'underline text-sm cursor-pointer text-gray-600 cursor-pointer',
+          title: link, // Show full URL on hover
+        },
+        truncated,
+      )
     },
   },
   {
