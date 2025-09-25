@@ -31,9 +31,9 @@ interface Props {
 const props = defineProps<Props>()
 
 const emit = defineEmits<{
-  edit: [id: string]
-  toggleVisibility: [id: string]
-  delete: [id: string]
+  edit: [coupon: Tables<'Coupons'>]
+  toggleVisibility: [coupon: Tables<'Coupons'>]
+  delete: [coupon: Tables<'Coupons'>]
 }>()
 
 function getRowItems(row: TableRow<Tables<'Coupons'>>) {
@@ -93,14 +93,14 @@ function getRowItems(row: TableRow<Tables<'Coupons'>>) {
       label: 'Edit coupon',
       icon: 'i-heroicons-pencil-square',
       onSelect() {
-        emit('edit', couponId)
+        emit('edit', row.original)
       },
     },
     {
-      label: status === 'hidden' ? 'Show coupon' : 'Hide coupon',
-      icon: status === 'hidden' ? 'i-heroicons-eye' : 'i-heroicons-eye-slash',
+      label: status === 'active' ? 'Deactivate coupon' : 'Activate coupon',
+      icon: status === 'active' ? 'i-heroicons-eye-slash' : 'i-heroicons-eye',
       onSelect() {
-        emit('toggleVisibility', couponId)
+        emit('toggleVisibility', row.original)
       },
     },
     {
@@ -110,7 +110,7 @@ function getRowItems(row: TableRow<Tables<'Coupons'>>) {
       label: 'Delete coupon',
       icon: 'i-heroicons-trash',
       onSelect() {
-        emit('delete', couponId)
+        emit('delete', row.original)
       },
     },
   ]
@@ -126,12 +126,11 @@ const columns: TableColumn<Tables<'Coupons'>>[] = [
     accessorKey: 'status',
     header: 'Status',
     cell: ({ row }) => {
-      const status = row.getValue('status') as 'active' | 'in_active' | 'scheduled' | 'hidden'
+      const status = row.getValue('status') as 'active' | 'in_active' | 'scheduled'
       const statusConfig = {
         active: { color: 'success' as const, text: 'Active' },
         in_active: { color: 'error' as const, text: 'Inactive' },
         scheduled: { color: 'warning' as const, text: 'Scheduled' },
-        hidden: { color: 'neutral' as const, text: 'Hidden' },
       }
 
       const config = statusConfig[status]
