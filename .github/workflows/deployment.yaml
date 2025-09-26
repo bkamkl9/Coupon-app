@@ -32,8 +32,8 @@ jobs:
         run: cd frontend && turbo build
         env:
           NODE_ENV: production
-          VITE_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5jcHNkc2pkc25ncG9kemRzbHNpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg4Nzc1MDEsImV4cCI6MjA3NDQ1MzUwMX0.F6wfkfLba0imxZ4cx8JMPeK7alu5z8hOCE7snobpHog
-          VITE_SUPABASE_URL=https://ncpsdsjdsngpodzdslsi.supabase.co
+          VITE_SUPABASE_ANON_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5jcHNkc2pkc25ncG9kemRzbHNpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg4Nzc1MDEsImV4cCI6MjA3NDQ1MzUwMX0.F6wfkfLba0imxZ4cx8JMPeK7alu5z8hOCE7snobpHog
+          VITE_SUPABASE_URL: https://ncpsdsjdsngpodzdslsi.supabase.co
 
       - name: Copy admin dist to output directory
         run: |
