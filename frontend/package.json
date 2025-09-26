@@ -8,8 +8,11 @@
     "packages/*"
   ],
   "scripts": {
+    "sync_android": "cd apps/mobile && npx cap sync android",
     "build": "turbo build",
+    "build:local": "LOCAL=1 turbo build",
     "dev": "turbo dev",
+    "dev:local": "LOCAL=1 turbo dev",
     "lint": "turbo lint",
     "type-check": "turbo type-check",
     "clean": "turbo clean"

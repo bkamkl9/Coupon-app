@@ -8,29 +8,37 @@
   },
   "scripts": {
     "dev": "vite",
+    "dev:local": "LOCAL=1 vite",
     "build": "run-p type-check \"build-only {@}\" --",
+    "build:local": "LOCAL=1 run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
+    "preview:local": "LOCAL=1 vite preview",
     "build-only": "vite build",
+    "build-only:local": "LOCAL=1 vite build",
     "type-check": "vue-tsc --build",
-    "format": "prettier --write src/"
+    "format": "prettier --write src/",
+    "sync_android": "npx cap sync android",
+    "sync_android:local": "LOCAL=1 npx cap sync android"
   },
   "dependencies": {
+    "@capacitor/android": "^7.4.3",
+    "@capacitor/core": "^7.4.3",
     "vue": "^3.5.18",
-    "vue-router": "^4.5.1",
-    "@workspace/tailwind": "workspace:tailwind"
+    "vue-router": "^4.5.1"
   },
   "devDependencies": {
+    "@capacitor/cli": "^7.4.3",
+    "@tailwindcss/vite": "^4.1.13",
     "@tsconfig/node22": "^22.0.2",
     "@types/node": "^22.16.5",
     "@vitejs/plugin-vue": "^6.0.1",
     "@vue/tsconfig": "^0.7.0",
     "npm-run-all2": "^8.0.4",
     "prettier": "3.6.2",
+    "tailwindcss": "^4.1.13",
     "typescript": "~5.8.0",
     "vite": "^7.0.6",
     "vite-plugin-vue-devtools": "^8.0.0",
-    "vue-tsc": "^3.0.4",
-    "@tailwindcss/vite": "^4.1.13",
-    "tailwindcss": "^4.1.13"
+    "vue-tsc": "^3.0.4"
   }
 }
