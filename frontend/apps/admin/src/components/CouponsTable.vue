@@ -118,9 +118,34 @@ function getRowItems(row: TableRow<Tables<'Coupons'>>) {
 
 const columns: TableColumn<Tables<'Coupons'>>[] = [
   {
+    accessorKey: 'image_url',
+    header: 'Thumbnail',
+    cell: ({ row }) => {
+      const image_url = row.getValue('image_url') as string
+      return h(
+        'a',
+        {
+          href: image_url,
+          target: '_blank',
+          rel: 'noopener noreferrer',
+        },
+        [
+          h('img', {
+            src: image_url,
+            class: 'w-20 h-10 rounded-sm object-cover cursor-pointer',
+          }),
+        ],
+      )
+    },
+  },
+  {
     accessorKey: 'id',
     header: 'Unique ID',
-    cell: ({ row }) => `${row.getValue('id')}`,
+    cell: ({ row }) => {
+      const id = String(row.getValue('id'))
+      const truncated = id.length > 8 ? id.substring(0, 8) + '...' : id
+      return truncated
+    },
   },
   {
     accessorKey: 'status',
@@ -146,8 +171,7 @@ const columns: TableColumn<Tables<'Coupons'>>[] = [
     header: 'Title',
     cell: ({ row }) => {
       const title = row.getValue('title') as string
-      const truncated = title.length > 20 ? title.substring(0, 20) + '...' : title
-      return h('div', { class: 'font-medium' }, truncated)
+      return h('div', { class: 'font-medium' }, title)
     },
   },
   {
@@ -155,7 +179,7 @@ const columns: TableColumn<Tables<'Coupons'>>[] = [
     header: 'Description',
     cell: ({ row }) => {
       const description = row.getValue('description') as string
-      const truncated = description.length > 10 ? description.substring(0, 10) + '...' : description
+      const truncated = description.length > 45 ? description.substring(0, 45) + '...' : description
       return h('div', { class: 'text-gray-600 text-sm' }, truncated)
     },
   },
@@ -164,7 +188,7 @@ const columns: TableColumn<Tables<'Coupons'>>[] = [
     header: 'Link',
     cell: ({ row }) => {
       const link = row.getValue('link') as string
-      const truncated = link.length > 15 ? link.substring(0, 15) + '...' : link
+      const truncated = link.length > 45 ? link.substring(0, 45) + '...' : link
       return h(
         'a',
         {
@@ -176,15 +200,6 @@ const columns: TableColumn<Tables<'Coupons'>>[] = [
         },
         truncated,
       )
-    },
-  },
-  {
-    accessorKey: 'image_url',
-    header: 'Image',
-    cell: ({ row }) => {
-      const image_url = row.getValue('image_url') as string
-      const truncated = image_url.length > 10 ? image_url.substring(0, 10) + '...' : image_url
-      return h('div', { class: 'text-gray-600 text-sm' }, truncated)
     },
   },
   {

@@ -24,7 +24,7 @@ import CouponsTable from '../../components/CouponsTable.vue'
 import getSupabaseClient from '@/composables/useSupabase'
 import { useRouter } from 'vue-router'
 
-const PAGE_SIZE = 16
+const PAGE_SIZE = 14
 
 const router = useRouter()
 
