@@ -188,6 +188,32 @@ Routes without `requiresAuth: true` are accessible to everyone:
 }
 ```
 
+## Current Implementation
+
+The router is currently implemented with the following routes:
+
+### Public Routes
+- **Login** (`/login`): Authentication page
+
+### Protected Routes (require authentication)
+All routes under `/` use the `DashboardLayout` and require authentication:
+
+- **Dashboard** (`/dashboard`): Main overview page
+- **Coupons** (`/coupons`): Coupon management with nested routes:
+  - `/coupons` - Browse all coupons with add/statistics actions
+  - `/coupons/add` - Add new coupon form
+  - `/coupons/edit/:id` - Edit existing coupon form  
+  - `/coupons/statistics` - Coupon analytics dashboard
+- **Users** (`/users`): User management interface
+- **Stats** (`/stats`): Overall statistics and analytics
+
+### Route Features
+- **Nested Routes**: Coupon routes use child routes for better organization
+- **Dynamic Routes**: Edit coupon uses `:id` parameter
+- **Lazy Loading**: Edit coupon view is loaded on-demand
+- **Toolbar Configuration**: Each route defines its toolbar title and actions
+- **Back Navigation**: Child routes include back buttons in toolbar
+
 ## Benefits
 
 - ✅ **Simple**: No custom abstractions to learn

@@ -220,6 +220,37 @@ router.beforeEach(async (to, from, next) => {
 - `authMachine.reactive.error` - Current error message (or `null`)
 - `authMachine.currentState.value` - Current state: `"IDLE"` or `"AUTHENTICATED"`
 
+## Implementation Details
+
+### Machine Configuration
+```typescript
+import { createMachine } from "xmachinevue";
+
+export const authMachine = createMachine("auth", {
+    initial: "IDLE",
+    reactive: {
+        user: null as User | null,
+        loading: false,
+        error: null as string | null,
+    },
+    states: { /* IDLE, AUTHENTICATED */ },
+    global: { /* clearError */ }
+});
+```
+
+### Supabase Integration
+The machine integrates directly with Supabase Auth:
+- **signInWithPassword**: Email/password authentication
+- **getSession**: Session restoration on app load  
+- **signOut**: Clean logout with session cleanup
+- **Error Handling**: Supabase error messages are displayed to users
+
+### State Persistence
+- **Session Check**: Automatically runs on app startup
+- **Auto-Restore**: Users stay logged in between browser sessions
+- **Navigation Guards**: Router checks auth state before route changes
+- **Reactive Updates**: UI automatically reflects authentication status
+
 ## Benefits
 
 - ✅ **Simple**: Only essential features, no complexity
