@@ -8,6 +8,7 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    CountdownDisplay: typeof import('./src/components/CountdownDisplay.vue')['default']
     CouponEditor: typeof import('./src/components/CouponEditor.vue')['default']
     CouponsTable: typeof import('./src/components/CouponsTable.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

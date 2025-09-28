@@ -20,12 +20,12 @@
             />
           </UFormField>
         </div>
-        <UFormField label="Scheduled for" name="scheduled_for" class="flex-4">
+        <UFormField label="Scheduled for (Local Time)" name="scheduled_for" class="flex-4">
           <UInput
             v-if="formData.status === 'scheduled'"
             class="w-full"
-            v-model="formData.scheduled_for"
-            placeholder="Enter coupon scheduled for"
+            v-model="scheduledForLocal"
+            placeholder="Select date and time in your local timezone"
             type="datetime-local"
           />
         </UFormField>
@@ -99,6 +99,25 @@ import type { Tables } from '@/types/db'
 import type { SelectItem } from '@nuxt/ui'
 import { z } from 'zod'
 
+
+function convertToLocalDatetime(isoString: string | null): string {
+  if (!isoString) return ''
+  const date = new Date(isoString)
+  // Convert to local datetime string format (YYYY-MM-DDTHH:mm)
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  const day = String(date.getDate()).padStart(2, '0')
+  const hours = String(date.getHours()).padStart(2, '0')
+  const minutes = String(date.getMinutes()).padStart(2, '0')
+  return `${year}-${month}-${day}T${hours}:${minutes}`
+}
+
+function convertToISOString(localDatetime: string): string | null {
+  if (!localDatetime) return null
+  const date = new Date(localDatetime)
+  return date.toISOString()
+}
+
 const { mode = 'create' } = defineProps<{
   mode?: 'edit' | 'create'
 }>()
@@ -128,6 +147,7 @@ const schema = computed(() => {
           if (!data.scheduled_for) {
             return false // scheduled_for is required when status is scheduled
           }
+          // Parse the ISO string from database or convert from local datetime
           const scheduledDate = new Date(data.scheduled_for)
           const now = new Date()
           return scheduledDate > now // Must be in the future
@@ -135,7 +155,7 @@ const schema = computed(() => {
         return true // Valid for all other statuses
       },
       {
-        message: "When status is 'scheduled', scheduled_for must be a valid future date and time",
+        message: "When status is 'scheduled', scheduled_for must be a valid future date and time (local timezone)",
         path: ['scheduled_for'], // Error will be shown on the scheduled_for field
       },
     )
@@ -157,6 +177,14 @@ const statusOptions: SelectItem[] = [
 
 const formData = defineModel<Tables<'Coupons'>>({
   required: true,
+})
+
+// Computed property for handling timezone conversion of scheduled_for field
+const scheduledForLocal = computed({
+  get: () => convertToLocalDatetime(formData.value.scheduled_for),
+  set: (value: string) => {
+    formData.value.scheduled_for = convertToISOString(value)
+  },
 })
 
 watch(

@@ -7,6 +7,7 @@ import { h, resolveComponent } from 'vue'
 import type { TableColumn } from '@nuxt/ui'
 import type { TableRow } from '@nuxt/ui/components/Table.vue.d.ts'
 import type { Tables } from '@/types/db'
+import CountdownDisplay from './CountdownDisplay.vue'
 
 const UBadge = resolveComponent('UBadge')
 const UButton = resolveComponent('UButton')
@@ -34,6 +35,7 @@ const emit = defineEmits<{
   edit: [coupon: Tables<'Coupons'>]
   toggleVisibility: [coupon: Tables<'Coupons'>]
   delete: [coupon: Tables<'Coupons'>]
+  onOverdue: [Tables<'Coupons'>]
 }>()
 
 function getRowItems(row: TableRow<Tables<'Coupons'>>) {
@@ -139,12 +141,11 @@ const columns: TableColumn<Tables<'Coupons'>>[] = [
     },
   },
   {
-    accessorKey: 'id',
-    header: 'Unique ID',
+    accessorKey: 'title',
+    header: 'Title',
     cell: ({ row }) => {
-      const id = String(row.getValue('id'))
-      const truncated = id.length > 8 ? id.substring(0, 8) + '...' : id
-      return truncated
+      const title = row.getValue('title') as string
+      return h('div', { class: 'font-medium' }, title)
     },
   },
   {
@@ -167,20 +168,19 @@ const columns: TableColumn<Tables<'Coupons'>>[] = [
     },
   },
   {
-    accessorKey: 'title',
-    header: 'Title',
+    accessorKey: 'scheduled_for',
+    header: 'Scheduled For',
     cell: ({ row }) => {
-      const title = row.getValue('title') as string
-      return h('div', { class: 'font-medium' }, title)
-    },
-  },
-  {
-    accessorKey: 'description',
-    header: 'Description',
-    cell: ({ row }) => {
-      const description = row.getValue('description') as string
-      const truncated = description.length > 45 ? description.substring(0, 45) + '...' : description
-      return h('div', { class: 'text-gray-600 text-sm' }, truncated)
+      const scheduledFor = row.getValue('scheduled_for')
+      const status = row.original.status
+
+      if (status === 'scheduled') {
+      return h(CountdownDisplay, {
+          time: new Date(scheduledFor as string),
+        })
+      }
+      
+      return h('div', { class: 'text-gray-600 text-sm' }, 'N/A')
     },
   },
   {

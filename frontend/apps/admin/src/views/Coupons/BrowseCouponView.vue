@@ -1,20 +1,8 @@
 <template>
-  <CouponsTable
-    :coupons="coupons"
-    :loading="loading"
-    @delete="deleteCoupon"
-    @toggleVisibility="toggleVisibility"
-    @edit="editCoupon"
-  />
-  <UPagination
-    class="mt-4"
-    v-model:page="currentPage"
-    :total="totalItems"
-    :page-count="totalPages"
-    :items-per-page="PAGE_SIZE"
-    show-edges
-    v-if="loading === false && totalPages > 1"
-  />
+  <CouponsTable :coupons="coupons" :loading="loading" @delete="deleteCoupon" @toggleVisibility="toggleVisibility"
+    @edit="editCoupon" @onOverdue="onOverdue" />
+  <UPagination class="mt-4" v-model:page="currentPage" :total="totalItems" :page-count="totalPages"
+    :items-per-page="PAGE_SIZE" show-edges v-if="loading === false && totalPages > 1" />
 </template>
 
 <script setup lang="ts">
@@ -76,17 +64,24 @@ async function deleteCoupon(coupon: Tables<'Coupons'>) {
   }
 }
 
+async function onOverdue(coupon: Tables<'Coupons'>) {
+  const idx = coupons.value.findIndex((c) => c.id === coupon.id)
+  if (idx !== -1) {
+    coupons.value[idx] = { ...coupons.value[idx], status: 'active' }
+  }
+}
+
 async function toggleVisibility(coupon: Tables<'Coupons'>) {
   const { error } = await supabase
     .from('Coupons')
-    .update({ status: coupon.status === 'active' ? 'in_active' : 'active' })
+    .update({ status: coupon.status === 'active' ? 'in_active' : 'active', scheduled_for: null })
     .eq('id', coupon.id)
 
   if (!error) {
     const newStatus = coupon.status === 'active' ? 'in_active' : 'active'
     const idx = coupons.value.findIndex((c) => c.id === coupon.id)
     if (idx !== -1) {
-      coupons.value[idx] = { ...coupons.value[idx], status: newStatus }
+      coupons.value[idx] = { ...coupons.value[idx], status: newStatus, scheduled_for: null, }
     }
   }
 }
