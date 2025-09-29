@@ -11,7 +11,7 @@
     "supabase:stop": "cd apps/supabase-service && npx supabase stop",
     "supabase:start": "cd apps/supabase-service && npx supabase start",
     "supabase:status": "cd apps/supabase-service && npx supabase status",
-    "supabase:gen:types": "cd apps/supabase-service && npx supabase gen types --local > frontend/apps/admin/src/types/db.ts",
+    "supabase:gen:types": "cd apps/supabase-service && npx supabase gen types --local > ../admin/src/types/db.ts && npx supabase gen types --local > ../mobile/src/types/db.ts",
     "turbo:dev": "turbo dev",
     "turbo:build": "turbo build",
     "turbo:clean": "turbo clean",
