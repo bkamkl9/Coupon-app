@@ -2,8 +2,8 @@
 import CouponCard from '@/components/CouponCard.vue'
 import getSupabaseClient from '@/composables/useSupabase'
 import type { Database } from '@/types/db'
-import { onMounted, ref, nextTick, onUnmounted } from 'vue'
-
+import { onMounted, ref, nextTick, onUnmounted, computed } from 'vue'
+import useLocalStorageFavourite from '@/composables/useLocalStorageFavourite'
 // Types
 type Coupon = Database['public']['Tables']['Coupons']['Row']
 
@@ -11,6 +11,14 @@ type Coupon = Database['public']['Tables']['Coupons']['Row']
 const PAGE_SIZE = 11
 
 const supabase = getSupabaseClient()
+const {
+  isFavourite,
+  favourite,
+  handleToggleFavourite,
+  isUpdatingFavourite,
+  getFavouriteCount,
+  initializeFavouriteCount,
+} = useLocalStorageFavourite()
 
 // Data
 const coupons = ref<Coupon[]>([])
@@ -31,6 +39,10 @@ onUnmounted(() => {
     observer.disconnect()
   }
 })
+
+// Computed - removed isFavouriteCoupon as we can use isFavourite directly
+
+// Functions
 
 function setupIntersectionObserver() {
   const sentinel = document.querySelector('#load-more-sentinel')
@@ -77,12 +89,26 @@ async function fetchCoupons() {
 
   isLoading.value = false
 }
+
+function toggleFavourite(coupon: Coupon) {
+  handleToggleFavourite(coupon)
+}
 </script>
 
 <template>
   <div class="h-[calc(100vh-116px-32px)] overflow-y-auto" id="coupon-container">
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-      <CouponCard v-for="coupon in coupons" :key="coupon.id" :coupon="coupon" />
+      <div v-for="coupon in coupons">
+        <CouponCard
+          class="h-full"
+          :key="coupon.id"
+          :coupon="coupon"
+          :isFavourite="isFavourite(coupon.id)"
+          :isUpdatingFavourite="isUpdatingFavourite(coupon.id)"
+          :favouriteCount="getFavouriteCount(coupon)"
+          @toggleFavourite="toggleFavourite"
+        />
+      </div>
     </div>
 
     <!-- Loading indicator -->

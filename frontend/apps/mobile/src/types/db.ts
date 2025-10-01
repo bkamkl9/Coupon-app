@@ -40,6 +40,7 @@ export type Database = {
           created_at: string | null
           currency: string
           description: string | null
+          favourite_count: number
           id: string
           image_url: string | null
           link: string
@@ -53,6 +54,7 @@ export type Database = {
           created_at?: string | null
           currency: string
           description?: string | null
+          favourite_count?: number
           id?: string
           image_url?: string | null
           link: string
@@ -66,6 +68,7 @@ export type Database = {
           created_at?: string | null
           currency?: string
           description?: string | null
+          favourite_count?: number
           id?: string
           image_url?: string | null
           link?: string
@@ -81,7 +84,13 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      update_favourite_count: {
+        Args: {
+          p_coupon_id: string
+          p_action: string
+        }
+        Returns: undefined
+      }
     }
     Enums: {
       coupon_status: "active" | "scheduled" | "hidden" | "in_active"
