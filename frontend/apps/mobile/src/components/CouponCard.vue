@@ -1,15 +1,25 @@
 <script setup lang="ts">
+import useLocalStorageFavourite from '@/composables/useLocalStorageFavourite'
+import { computed } from 'vue'
 import CouponCode from './CouponCode.vue'
+import CardFavouriteButton from './CardFavouriteButton.vue'
 import CouponButton from './CouponButton.vue'
 import type { Database } from '@/types/db'
 
-const props = defineProps<{
-  coupon: Database['public']['Tables']['Coupons']['Row']
-}>()
+const props = defineProps<{ coupon: Database['public']['Tables']['Coupons']['Row'] }>()
+
+const { favourite, toggleFavourite } = useLocalStorageFavourite()
+
+const isFavourite = computed(() => favourite.value.includes(props.coupon.id))
 </script>
 
 <template>
-  <div class="bg-white rounded-lg p-4 flex flex-col gap-4">
+  <div class="bg-white rounded-lg p-4 flex flex-col gap-4 relative">
+    <CardFavouriteButton
+      :isFavourite="isFavourite"
+      :numberFavourites="20"
+      @toggleFavourite="() => toggleFavourite(coupon.id)"
+    />
     <div class="w-full h-48 bg-slate-200 rounded-lg" v-if="coupon.image_url">
       <img
         :src="coupon.image_url"
