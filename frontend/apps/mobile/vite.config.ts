@@ -21,5 +21,5 @@ export default defineConfig({
     },
   },
   base: process.env.LOCAL ? '/' : '/Coupon-app/mobile/',
-  envDir: './',
+  // envDir: './',
 })

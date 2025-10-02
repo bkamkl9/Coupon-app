@@ -1,6 +1,7 @@
 import { onMounted, ref, watch } from 'vue'
 import getSupabaseClient from './useSupabase'
 import type { Database } from '@/types/db'
+import { useStats } from '@/composables/useStats'
 
 type Coupon = Database['public']['Tables']['Coupons']['Row']
 
@@ -23,8 +24,10 @@ export default function useLocalStorageFavourite() {
 
   function toggleFavourite(id: string) {
     if (favourite.value.includes(id)) {
+      useStats(id, 'coupon_remove_from_favourite')
       favourite.value = favourite.value.filter((favId) => favId !== id)
     } else {
+      useStats(id, 'coupon_add_to_favourite')
       favourite.value.push(id)
     }
   }

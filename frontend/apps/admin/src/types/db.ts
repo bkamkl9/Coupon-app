@@ -79,6 +79,35 @@ export type Database = {
         }
         Relationships: []
       }
+      Stats: {
+        Row: {
+          event_type: string
+          id: number
+          reference: string
+          time: string
+        }
+        Insert: {
+          event_type: string
+          id?: number
+          reference: string
+          time?: string
+        }
+        Update: {
+          event_type?: string
+          id?: number
+          reference?: string
+          time?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "Stats_reference_fkey"
+            columns: ["reference"]
+            isOneToOne: false
+            referencedRelation: "Coupons"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never

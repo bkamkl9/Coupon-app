@@ -38,9 +38,7 @@ const emit = defineEmits<{ (e: 'toggleFavourite', coupon: Coupon): void }>()
       <div class="flex gap-4 mt-2">
         <CouponCode>{{ props.coupon.code }}</CouponCode>
       </div>
-      <a :href="props.coupon.link" target="_blank" rel="noopener noreferrer">
-        <CouponButton />
-      </a>
+      <CouponButton :link="props.coupon.link" :coupon_id="props.coupon.id" />
       <span class="text-sm text-slate-500">Linki partnerskie • Ceny mogą się różnić</span>
     </div>
   </div>

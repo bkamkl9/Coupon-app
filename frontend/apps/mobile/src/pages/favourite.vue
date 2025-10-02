@@ -4,7 +4,7 @@ import getSupabaseClient from '@/composables/useSupabase'
 import type { Database } from '@/types/db'
 import { onMounted, ref, computed } from 'vue'
 import useLocalStorageFavourite from '@/composables/useLocalStorageFavourite'
-
+import { useStats } from '@/composables/useStats'
 // Types
 type Coupon = Database['public']['Tables']['Coupons']['Row']
 
