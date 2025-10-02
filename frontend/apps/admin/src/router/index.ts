@@ -8,7 +8,7 @@ import { couponRoutes, statsRoutes } from "./routes";
 const routes: RouteRecordRaw[] = [
   {
     path: "/",
-    redirect: "/dashboard",
+    redirect: "/coupons",
   },
   {
     path: "/login",
