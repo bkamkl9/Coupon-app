@@ -78,19 +78,9 @@ const user = computed(() => authMachine.reactive.user)
 
 const navigationItems: NavigationMenuItem[] = [
   {
-    label: 'Dashboard',
-    icon: 'i-heroicons-home',
-    to: '/dashboard',
-  },
-  {
     label: 'Coupons',
     icon: 'i-heroicons-ticket',
     to: '/coupons',
-  },
-  {
-    label: 'Users',
-    icon: 'i-heroicons-users',
-    to: '/users',
   },
   {
     label: 'Statistics',

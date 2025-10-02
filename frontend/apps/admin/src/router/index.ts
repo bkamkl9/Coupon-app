@@ -3,12 +3,7 @@ import type { RouteRecordRaw } from "vue-router";
 import DashboardLayout from "@/layouts/DashboardLayout.vue";
 import LoginView from "@/views/LoginView.vue";
 import { authMachine } from "@/machines/authMachine";
-import {
-  couponRoutes,
-  dashboardRoutes,
-  statsRoutes,
-  userRoutes,
-} from "./routes";
+import { couponRoutes, statsRoutes } from "./routes";
 
 const routes: RouteRecordRaw[] = [
   {
@@ -25,9 +20,7 @@ const routes: RouteRecordRaw[] = [
     component: DashboardLayout,
     meta: { requiresAuth: true },
     children: [
-      ...dashboardRoutes,
       ...couponRoutes,
-      ...userRoutes,
       ...statsRoutes,
     ],
   },

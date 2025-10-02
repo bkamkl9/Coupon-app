@@ -32,6 +32,7 @@ const coupon = ref<Tables<'Coupons'>>({
   price: 0,
   scheduled_for: null,
   created_at: '',
+  favourite_count: 0,
 })
 
 const loading = ref(true)

@@ -25,6 +25,7 @@ const coupon = ref<Tables<'Coupons'>>({
   price: 0,
   scheduled_for: null,
   created_at: new Date().toISOString(),
+  favourite_count: 0,
 })
 
 async function handleCreate() {

@@ -67,12 +67,6 @@ export const couponRoutes: RouteRecordRaw[] = [
                     title: "Coupons Management",
                     toolbarActions: [
                         {
-                            label: "Statistics",
-                            icon: "i-heroicons-chart-bar",
-                            action: "statistics",
-                            to: "/coupons/statistics",
-                        },
-                        {
                             label: "Add Coupon",
                             icon: "i-heroicons-plus",
                             action: "add",
