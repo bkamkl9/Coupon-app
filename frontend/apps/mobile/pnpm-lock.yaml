@@ -8,11 +8,29 @@ importers:
 
   .:
     dependencies:
+      '@capacitor-firebase/messaging':
+        specifier: ^7.3.1
+        version: 7.3.1(@capacitor/core@7.4.3)
+      '@capacitor/core':
+        specifier: ^7.4.3
+        version: 7.4.3
       '@supabase/supabase-js':
         specifier: ^2.58.0
         version: 2.58.0
 
 packages:
+
+  '@capacitor-firebase/messaging@7.3.1':
+    resolution: {integrity: sha512-LBc7zeOUNe96K+c8x+YE6AvWKLSrJPFy0ryQD82okZb540l8d6oT0LHJoN0PTHi+a91GFvnm+l3aEKS8l5+l/g==}
+    peerDependencies:
+      '@capacitor/core': '>=7.0.0'
+      firebase: ^11.2.0
+    peerDependenciesMeta:
+      firebase:
+        optional: true
+
+  '@capacitor/core@7.4.3':
+    resolution: {integrity: sha512-wCWr8fQ9Wxn0466vPg7nMn0tivbNVjNy1yL4GvDSIZuZx7UpU2HeVGNe9QjN/quEd+YLRFeKEBLBw619VqUiNg==}
 
   '@supabase/auth-js@2.72.0':
     resolution: {integrity: sha512-4+bnUrtTDK1YD0/FCx2YtMiQH5FGu9Jlf4IQi5kcqRwRwqp2ey39V61nHNdH86jm3DIzz0aZKiWfTW8qXk1swQ==}
@@ -48,6 +66,9 @@ packages:
   tr46@0.0.3:
     resolution: {integrity: sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==}
 
+  tslib@2.8.1:
+    resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
+
   undici-types@6.21.0:
     resolution: {integrity: sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ==}
 
@@ -70,6 +91,14 @@ packages:
         optional: true
 
 snapshots:
+
+  '@capacitor-firebase/messaging@7.3.1(@capacitor/core@7.4.3)':
+    dependencies:
+      '@capacitor/core': 7.4.3
+
+  '@capacitor/core@7.4.3':
+    dependencies:
+      tslib: 2.8.1
 
   '@supabase/auth-js@2.72.0':
     dependencies:
@@ -124,6 +153,8 @@ snapshots:
       '@types/node': 22.18.6
 
   tr46@0.0.3: {}
+
+  tslib@2.8.1: {}
 
   undici-types@6.21.0: {}
 

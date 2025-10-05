@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "689523908395",
+    "project_id": "aliokacje-push",
+    "storage_bucket": "aliokacje-push.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:689523908395:android:a39c37db3be7884984ef6e",
+        "android_client_info": {
+          "package_name": "com.apiokazje.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZdYLsRsloM-QlzEpTJf2OqJv625yeuew"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
